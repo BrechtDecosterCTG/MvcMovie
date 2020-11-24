@@ -83,7 +83,7 @@ namespace MvcMovie.Controllers
             {
                 _context.Add(movie);
                 await _context.SaveChangesAsync();
-                var value = movie.Id.ToString();
+                var value = "Id=" + movie.Id.ToString();
                 return new JsonResult(value)
                 {
                     StatusCode = 200

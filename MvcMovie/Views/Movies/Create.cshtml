@@ -35,10 +35,9 @@
             <div class="form-group">
                 <label asp-for="Price" class="control-label"></label>
                 <input id="price" asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input id="submit" type="button" value="Create" class="btn btn-primary" onclick="CreateMovie(); RedirectToMovieIndex();" />
+                <input id="submit" type="button" value="Create" class="btn btn-primary" onclick="CreateMovie();" />
             </div>
         </form>
     </div>
@@ -50,9 +49,6 @@
 
 
 <script lang="en" type="text/javascript">
-    function RedirectToMovieIndex() {
-        window.location.href = '@Url.Action("Index", "Movies")';
-    }
     function CreateMovie() {
         var movieDetails = GetMovieDetails();
         $.ajax({
@@ -63,9 +59,12 @@
             url: '/Movies/Create',
             context: document.body,
             data: movieDetails,
+            success: function (xhr) {
+                window.location.href = '@Url.Action("Index", "Movies")';
+            },
             error: function (xhr) {
                 console.log(xhr.responseText);
-                alert("Error has occurred..");
+                alert("Error has occurred.. " + xhr.responseText);
             }
         });
     }
@@ -75,8 +74,7 @@
         movieDetails += "&Rating=" + document.getElementById("rating").value;
         movieDetails += "&ReleaseDate=" + document.getElementById("releasedate").value;
         movieDetails += "&Genre=" + document.getElementById("genre").value;
-        movieDetails += "&Price=" + document.getElementById("price").value;
-        //movieDetails += "&Price=" + parseFloat(document.getElementById("price").value).toLocaleString(navigator.language);
+        movieDetails += "&Price=" + parseFloat(document.getElementById("price").value).toLocaleString(navigator.language);
         return movieDetails;
     }
 </script>
