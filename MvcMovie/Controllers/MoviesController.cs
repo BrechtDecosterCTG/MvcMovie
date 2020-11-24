@@ -77,16 +77,29 @@ namespace MvcMovie.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,ReleaseDate,Genre,Price,Rating")] Movie movie)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(movie);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var value = movie.Id.ToString();
+                return new JsonResult(value)
+                {
+                    StatusCode = 200
+                };
             }
-            return View(movie);
+
+            var error = "The following attributes are invalid within the database:";
+            foreach (var keyValue in ModelState.Where(x => x.Value.ValidationState == Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Invalid))
+            {
+                error += "\n" + keyValue.Key;
+            }
+            return new JsonResult(error)
+            {
+                StatusCode = 400
+            };
+
         }
 
         // GET: Movies/Edit/5

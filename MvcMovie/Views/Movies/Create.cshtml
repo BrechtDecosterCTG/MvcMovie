@@ -14,31 +14,31 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
+                <input id="title" asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Rating" class="control-label"></label>
-                <input asp-for="Rating" class="form-control" />
+                <input id="rating" asp-for="Rating" class="form-control" />
                 <span asp-validation-for="Rating" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ReleaseDate" class="control-label"></label>
-                <input asp-for="ReleaseDate" class="form-control" />
+                <input id="releasedate" asp-for="ReleaseDate" class="form-control" />
                 <span asp-validation-for="ReleaseDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Genre" class="control-label"></label>
-                <input asp-for="Genre" class="form-control" />
+                <input id="genre" asp-for="Genre" class="form-control" />
                 <span asp-validation-for="Genre" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
+                <input id="price" asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input id="submit" type="button" value="Create" class="btn btn-primary" onclick="CreateMovie(); RedirectToMovieIndex();" />
             </div>
         </form>
     </div>
@@ -47,6 +47,39 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+
+<script lang="en" type="text/javascript">
+    function RedirectToMovieIndex() {
+        window.location.href = '@Url.Action("Index", "Movies")';
+    }
+    function CreateMovie() {
+        var movieDetails = GetMovieDetails();
+        $.ajax({
+            type: "POST",
+            traditional: true,
+            async: false,
+            cache: false,
+            url: '/Movies/Create',
+            context: document.body,
+            data: movieDetails,
+            error: function (xhr) {
+                console.log(xhr.responseText);
+                alert("Error has occurred..");
+            }
+        });
+    }
+    function GetMovieDetails() {
+        var movieDetails = "";
+        movieDetails += "Title=" + document.getElementById("title").value;
+        movieDetails += "&Rating=" + document.getElementById("rating").value;
+        movieDetails += "&ReleaseDate=" + document.getElementById("releasedate").value;
+        movieDetails += "&Genre=" + document.getElementById("genre").value;
+        movieDetails += "&Price=" + document.getElementById("price").value;
+        //movieDetails += "&Price=" + parseFloat(document.getElementById("price").value).toLocaleString(navigator.language);
+        return movieDetails;
+    }
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
