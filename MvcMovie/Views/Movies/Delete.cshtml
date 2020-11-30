@@ -44,8 +44,35 @@
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <input id="id" type="hidden" asp-for="Id" />
+        <input type="button" value="Delete" class="btn btn-danger" onclick="DeleteMovie();" /> |
         <a asp-action="Index">Back to List</a>
     </form>
 </div>
+
+<script lang="en" type="text/javascript">
+    function DeleteMovie() {
+        var movieDetails = GetMovieDetails();
+        $.ajax({
+            type: "POST",
+            traditional: true,
+            async: false,
+            cache: false,
+            url: '/Movies/Delete/' + document.getElementById("id").value,
+            context: document.body,
+            data: movieDetails,
+            success: function (xhr) {
+                window.location.href = '@Url.Action("Index", "Movies")';
+            },
+            error: function (xhr) {
+                console.log(xhr.responseText);
+                alert("Error has occurred.. " + xhr.responseText);
+            }
+        });
+    }
+    function GetMovieDetails() {
+        var movieDetails = "";
+        movieDetails += "Id=" + document.getElementById("id").value;
+        return movieDetails;
+    }
+</script>

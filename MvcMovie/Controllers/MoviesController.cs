@@ -147,9 +147,20 @@ namespace MvcMovie.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return new JsonResult("")
+                {
+                    StatusCode = 200
+                };
             }
-            return View(movie);
+            var error = "The following attributes are invalid within the database:";
+            foreach (var keyValue in ModelState.Where(x => x.Value.ValidationState == Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Invalid))
+            {
+                error += "\n" + keyValue.Key;
+            }
+            return new JsonResult(error)
+            {
+                StatusCode = 400
+            };
         }
 
         // GET: Movies/Delete/5
@@ -177,7 +188,10 @@ namespace MvcMovie.Controllers
             var movie = await _context.Movie.FindAsync(id);
             _context.Movie.Remove(movie);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return new JsonResult("")
+            {
+                StatusCode = 200
+            };
         }
 
         private bool MovieExists(int id)
