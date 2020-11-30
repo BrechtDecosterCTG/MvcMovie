@@ -73,33 +73,6 @@ namespace MvcMovie.Models
                         Genre = "Family",
                         Rating = "PG-13",
                         Price = 9.99M
-                    },
-
-                    new Movie
-                    {
-                        Title = "Dummy Film",
-                        ReleaseDate = DateTime.Parse("2020-12-12"),
-                        Genre = "Horror",
-                        Rating = "R",
-                        Price = 4.99M
-                    },
-
-                    new Movie
-                    {
-                        Title = "Dummy Film",
-                        ReleaseDate = DateTime.Parse("2020-12-12"),
-                        Genre = "Horror",
-                        Rating = "R",
-                        Price = 4.99M
-                    },
-
-                    new Movie
-                    {
-                        Title = "Dummy Film",
-                        ReleaseDate = DateTime.Parse("2020-12-12"),
-                        Genre = "Horror",
-                        Rating = "R",
-                        Price = 4.99M
                     }
                 );
                 context.SaveChanges();
