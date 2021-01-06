@@ -19,7 +19,6 @@
         "commandName": "Project",
         "dotnetRunMessages": "true",
         "launchBrowser": true,
-        "applicationUrl": "https://DemoApp:5001;http://DemoApp:5000",
         "environmentVariables": {
             "ASPNETCORE_ENVIRONMENT": "Development"
         }
