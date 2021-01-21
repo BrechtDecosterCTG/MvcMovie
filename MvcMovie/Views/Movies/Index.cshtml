@@ -46,19 +46,19 @@
         @foreach (var item in Model.Movies)
         {
         <tr>
-            <td>
+            <td data-test="title-@item.Id">
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
-            <td>
+            <td data-test="releaseDate-@item.Id">
                 @Html.DisplayFor(modelItem => item.ReleaseDate)
             </td>
-            <td>
+            <td data-test="genre-@item.Id">
                 @Html.DisplayFor(modelItem => item.Genre)
             </td>
-            <td>
+            <td data-test="price-@item.Id">
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
-            <td>
+            <td data-test="rating-@item.Id">
                 @Html.DisplayFor(modelItem => item.Rating)
             </td>
             <td>
